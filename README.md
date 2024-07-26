@@ -18,7 +18,7 @@ statistic13 DB를 생성한 후에 requestInfo, requestCode, user table을 생�
 
 # SW활용 현황 통계 API 구축을 위한 SQL 작성
 ## 1.월별 접속자 수
-'''
+ ```
 SELECT
     DATE_FORMAT(STR_TO_DATE(createDate, '%y%m%d%H%i'), '%Y-%m') AS month,
     COUNT(DISTINCT userID) AS login_count
@@ -28,4 +28,4 @@ GROUP BY
     DATE_FORMAT(STR_TO_DATE(createDate, '%y%m%d%H%i'), '%Y-%m')
 ORDER BY
     month;
-'''
+ ```
