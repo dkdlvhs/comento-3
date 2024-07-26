@@ -14,7 +14,13 @@ statistic13 DB를 생성한 후에 requestInfo, requestCode, user table을 생�
 
 # 3-3. [년도 로그인수 API ]스프링부트, Mybatis, mariadb 연동
 
+<img width="380" alt="image" src="https://github.com/user-attachments/assets/43ebbf5c-38b2-4a6a-9bca-6028a858138a">
 
+<img width="1493" alt="image" src="https://github.com/user-attachments/assets/754fa29e-829f-4ba4-ac70-f8ccb429920f">
+
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/28325299-63e5-4a0d-8993-8dfb9b854378">
+
+오류의 원인을 못찾겠습니다
 
 # SW활용 현황 통계 API 구축을 위한 SQL 작성
 ## 1.월별 접속자 수
@@ -23,9 +29,73 @@ SELECT
     DATE_FORMAT(STR_TO_DATE(createDate, '%y%m%d%H%i'), '%Y-%m') AS month,
     COUNT(DISTINCT userID) AS login_count
 FROM
-    statistic.requestInfo
+    statistic13.requestInfo
 GROUP BY
     DATE_FORMAT(STR_TO_DATE(createDate, '%y%m%d%H%i'), '%Y-%m')
 ORDER BY
     month;
  ```
+## 2. 일자별 접속자 수
+ ```
+SELECT
+    DATE(STR_TO_DATE(createDate, '%y%m%d%H%i')) AS date,
+    COUNT(DISTINCT userID) AS login_count
+FROM
+    statistic13.requestInfo
+GROUP BY
+    DATE(STR_TO_DATE(createDate, '%y%m%d%H%i'))
+ORDER BY
+    date;
+ ```
+## 3. 평균 하루 로그인 수
+ ```
+SELECT
+    AVG(daily_logins) AS average_daily_logins
+FROM (
+    SELECT
+        DATE(STR_TO_DATE(createDate, '%y%m%d%H%i')) AS date,
+        COUNT(*) AS daily_logins
+    FROM
+        statistic13.requestInfo
+    GROUP BY
+        DATE(STR_TO_DATE(createDate, '%y%m%d%H%i'))
+) AS daily_counts;
+ ```
+## 4. 휴일을 제외한 로그인 수
+휴일 테이블을 별도로 생성하여 휴일에 해당하는 DATE를 삽입한다.
+```
+CREATE TABLE statistic13.holidays (
+    holiday_date DATE NOT NULL PRIMARY KEY
+);
+
+-- 휴일을 제외한 로그인 수를 계산하는 쿼리
+SELECT
+    DATE(STR_TO_DATE(createDate, '%y%m%d%H%i')) AS date,
+    COUNT(DISTINCT userID) AS login_count
+FROM
+    statistic13.requestInfo
+WHERE
+    DATE(STR_TO_DATE(createDate, '%y%m%d%H%i')) NOT IN (SELECT holiday_date FROM statistic13.holidays)
+GROUP BY
+    DATE(STR_TO_DATE(createDate, '%y%m%d%H%i'))
+ORDER BY
+    date;
+```
+## 5. 부서별 월별 로그인 수
+```
+SELECT
+    u.HR_ORGAN AS department,
+    DATE_FORMAT(STR_TO_DATE(r.createDate, '%y%m%d%H%i'), '%Y-%m') AS month,
+    COUNT(DISTINCT r.userID) AS login_count
+FROM
+    statistic13.requestInfo r
+JOIN
+    statistic13.user u ON r.userID = u.userID
+GROUP BY
+    u.HR_ORGAN,
+    DATE_FORMAT(STR_TO_DATE(r.createDate, '%y%m%d%H%i'), '%Y-%m')
+ORDER BY
+    department,
+    month;
+
+```
