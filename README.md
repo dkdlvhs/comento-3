@@ -26,6 +26,7 @@ statistic13 DB를 생성한 후에 requestInfo, requestCode, user table을 생�
 
 <img width="401" alt="스크린샷 2024-08-02 오후 8 30 19" src="https://github.com/user-attachments/assets/3b289c46-aed8-438a-a7c2-f704e1440efa">
 <img width="423" alt="스크린샷 2024-08-02 오후 8 30 30" src="https://github.com/user-attachments/assets/de91d391-1d33-498d-bc3a-b298e873652d">
+<img width="379" alt="스크린샷 2024-08-02 오후 8 32 51" src="https://github.com/user-attachments/assets/bcdec3cd-e2d7-4092-928f-4b97c74b5892">
 
 
 # SW활용 현황 통계 API 구축을 위한 SQL 작성
