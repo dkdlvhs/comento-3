@@ -22,6 +22,12 @@ statistic13 DB를 생성한 후에 requestInfo, requestCode, user table을 생�
 
 오류의 원인을 못찾겠습니다
 
+## 해결
+<img width="411" alt="스크린샷 2024-08-02 오후 6 51 12" src="https://github.com/user-attachments/assets/9825c580-e354-4757-bfbf-e116bc92d222">
+
+<img width="413" alt="스크린샷 2024-08-02 오후 6 51 25" src="https://github.com/user-attachments/assets/7d723fb4-6b4c-46bf-993c-cfc0095f8ae5">
+
+
 # SW활용 현황 통계 API 구축을 위한 SQL 작성
 ## 1.월별 접속자 수
  ```
